@@ -38,7 +38,7 @@ pic_init:
     out 0xA1, al
 
     ; Unmask keyboard IRQ1 only, mask everything else
-    mov al, 0xFD       ; 11111101 - only IRQ1 unmasked
+    mov al, 0xFC       ; 11111100 - IRQ0 (timer) and IRQ1 (keyboard) unmasked
     out 0x21, al
     mov al, 0xFF       ; mask all PIC2
     out 0xA1, al

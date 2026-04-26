@@ -1,10 +1,11 @@
 [BITS 32]
 global isr0, isr1, isr2, isr3, isr4, isr5, isr6
 global isr7, isr8, isr13, isr14
-global irq1
+global irq0, irq1
 
 extern isr_handler
 extern keyboard_handler
+extern timer_handler
 
 %macro ISR_NOERRCODE 1
 isr%1:
@@ -36,6 +37,11 @@ ISR_NOERRCODE 7
 ISR_ERRCODE   8
 ISR_ERRCODE   13
 ISR_ERRCODE   14
+
+irq0:
+    cli
+    call timer_handler
+    iret
 
 irq1:
     cli

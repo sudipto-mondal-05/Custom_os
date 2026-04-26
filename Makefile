@@ -24,8 +24,11 @@ kernel/keyboard.o: kernel/keyboard.c
 kernel/shell.o: kernel/shell.c
 	gcc -m32 -ffreestanding -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -c kernel/shell.c -o kernel/shell.o
 
-iso/boot/kernel.bin: kernel/entry.o kernel/isr.o kernel/ports.o kernel/kernel.o kernel/idt.o kernel/isr_c.o kernel/keyboard.o kernel/shell.o
-	ld -m elf_i386 -T linker.ld -o iso/boot/kernel.bin kernel/entry.o kernel/isr.o kernel/ports.o kernel/kernel.o kernel/idt.o kernel/isr_c.o kernel/keyboard.o kernel/shell.o
+kernel/timer.o: kernel/timer.c
+	gcc -m32 -ffreestanding -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -c kernel/timer.c -o kernel/timer.o
+
+iso/boot/kernel.bin: kernel/entry.o kernel/isr.o kernel/ports.o kernel/kernel.o kernel/idt.o kernel/isr_c.o kernel/keyboard.o kernel/shell.o kernel/timer.o
+	ld -m elf_i386 -T linker.ld -o iso/boot/kernel.bin kernel/entry.o kernel/isr.o kernel/ports.o kernel/kernel.o kernel/idt.o kernel/isr_c.o kernel/keyboard.o kernel/shell.o kernel/timer.o
 
 myos.iso: iso/boot/kernel.bin
 	grub-mkrescue -o myos.iso iso

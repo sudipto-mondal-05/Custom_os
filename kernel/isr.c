@@ -7,6 +7,7 @@ extern void isr6();  extern void isr7();  extern void isr8();
 extern void isr13(); extern void isr14();
 extern void irq1();
 
+void timer_init();
 void pic_init();
 void idt_set_gate(unsigned char num, unsigned int base, unsigned short selector, unsigned char flags);
 
@@ -61,7 +62,7 @@ void isr_init() {
     idt_set_gate(8,  (unsigned int)isr8,  0x10, 0x8E);
     idt_set_gate(13, (unsigned int)isr13, 0x10, 0x8E);
     idt_set_gate(14, (unsigned int)isr14, 0x10, 0x8E);
-
-
     idt_set_gate(33, (unsigned int)irq1,  0x10, 0x8E);
+
+    timer_init();
 }
